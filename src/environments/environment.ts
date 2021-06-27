@@ -3,7 +3,9 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  apiBase: 'http://geoapi.heartrails.com/api/json?',
+  apiUrl: 'http://geoapi.heartrails.com/api/json?method=getCities'
 };
 
 /*
