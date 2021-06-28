@@ -1,8 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
 
 //アニメーションモジュールインポート
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -16,10 +14,17 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatTableModule } from '@angular/material/table';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { AppRoutingModule } from './app-routing.module';
+
+// コンポーネント
+import { AppComponent } from './app.component';
+import { CityComponent } from './city/city.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    CityComponent
   ],
   imports: [
     BrowserModule,
@@ -34,7 +39,8 @@ import { MatInputModule } from '@angular/material/input';
     MatCheckboxModule,
     MatTableModule,
     MatFormFieldModule,
-    MatInputModule
+    MatInputModule,
+    MatSelectModule
   ],
   providers: [],
   bootstrap: [AppComponent]
