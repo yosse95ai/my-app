@@ -5,7 +5,7 @@
 </div>
 
 <div class="form" style="text-align:center">
-  <!-- 都道府県名フォーム -->
+  <!-- prefectureフォーム -->
   <mat-form-field appearance="fill">
     <mat-label>都道府県</mat-label>
     <mat-select name="pref" (selectionChange)="searchCities($event.value)">
@@ -14,12 +14,23 @@
       </mat-option>
     </mat-select>
   </mat-form-field>
-  <!-- 市町村区フォーム -->
+  <!-- Cityフォーム -->
   <mat-form-field appearance="fill">
     <mat-label>市町村区</mat-label>
-    <mat-select name="city" (selectionChange)="changeCity($event.value)">
-      <mat-option>-選択-</mat-option>
-      <mat-option *ngFor="let cn of city_list" [value]=cn>{{cn}}</mat-option>
+    <mat-select name="city" (selectionChange)="_searchTowns($event.value)">
+      <mat-option *ngFor="let cn of city_list" [value]=cn>
+        {{cn}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <!-- Townフォーム -->
+  <mat-form-field appearance="fill">
+    <mat-label>地区名</mat-label>
+    <mat-select name="town" (selectionChange)="changeSelectedTown($event.value)">
+      <mat-option>-指定なし-</mat-option>
+      <mat-option *ngFor="let tn of town_list" [value]=tn>
+        {{tn.town}}
+      </mat-option>
     </mat-select>
   </mat-form-field>
   <button mat-raised-button (click)="searchTowns()" color="primary">検索</button>
@@ -27,14 +38,29 @@
 <div id="mn">
   <table mat-table [dataSource]="dataSourceTown" class="mat-elevation-z8">
     <!-- 住所カラム -->
-    <ng-container matColumnDef="city">
+    <ng-container matColumnDef="town">
       <th mat-header-cell *matHeaderCellDef> 住所 </th>
       <td mat-cell *matCellDef="let element"> {{element.town}} </td>
     </ng-container>
     <!-- 仮名カラム -->
-    <ng-container matColumnDef="city-kana">
+    <ng-container matColumnDef="town-kana">
       <th mat-header-cell *matHeaderCellDef> 読み </th>
       <td mat-cell *matCellDef="let element"> {{element.town_kana}} </td>
+    </ng-container>
+    <!-- 緯度カラム -->
+    <ng-container matColumnDef="town-latitude">
+      <th mat-header-cell *matHeaderCellDef> 緯度 </th>
+      <td mat-cell *matCellDef="let element"> {{element.y}} </td>
+    </ng-container>
+    <!-- 経度カラム -->
+    <ng-container matColumnDef="town-longitude">
+      <th mat-header-cell *matHeaderCellDef> 経度 </th>
+      <td mat-cell *matCellDef="let element"> {{element.x}} </td>
+    </ng-container>
+    <!-- 郵便番号カラム -->
+    <ng-container matColumnDef="postal">
+      <th mat-header-cell *matHeaderCellDef> 郵便番号 </th>
+      <td mat-cell *matCellDef="let element"> 〒{{slice(floor(element.postal/10000),3)}}-{{slice(element.postal%10000,4)}} </td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

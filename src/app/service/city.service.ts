@@ -3,6 +3,18 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
+
+interface townInfo {
+  city: string;
+  city_kana: string;
+  town: string;
+  town_kana: string;
+  x: number;
+  y: number;
+  prefecture: string;
+  postal: number;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -25,4 +37,9 @@ export class CityService {
     return this.http.get(url);
   }
 
+  getLatLon(town: townInfo){
+    let longitude = town.x;
+    let latitude = town.y;
+    return { "lat":latitude, "lon":longitude };
+  }
 }
