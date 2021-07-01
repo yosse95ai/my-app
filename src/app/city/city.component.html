@@ -33,8 +33,11 @@
       </mat-option>
     </mat-select>
   </mat-form-field>
-  <button mat-raised-button (click)="searchTowns()" color="primary">検索</button>
+  <button mat-raised-button (click)="updateWeather()" color="primary">検索</button>
 </div>
+
+<app-weather [townWeather]="selectedTownWeather"></app-weather>
+
 <div id="mn">
   <table mat-table [dataSource]="dataSourceTown" class="mat-elevation-z8">
     <!-- 住所カラム -->

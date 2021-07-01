@@ -1,0 +1,32 @@
+<div id="mn" *ngIf="townWeather">
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+    <!-- 天気カラム -->
+    <ng-container matColumnDef="weather">
+      <th mat-header-cell *matHeaderCellDef> 天気 </th>
+      <td mat-cell *matCellDef="let element">{{element.weather_main}}</td>
+    </ng-container>
+    <!-- 状態カラム -->
+    <ng-container matColumnDef="desc">
+      <th mat-header-cell *matHeaderCellDef> 状態 </th>
+      <td mat-cell *matCellDef="let element"> {{element.weather_description}} </td>
+    </ng-container>
+    <!-- 緯度カラム -->
+    <!-- <ng-container matColumnDef="town-latitude">
+      <th mat-header-cell *matHeaderCellDef> 緯度 </th>
+      <td mat-cell *matCellDef="let element"> {{element.y}} </td>
+    </ng-container> -->
+    <!-- 経度カラム -->
+    <!-- <ng-container matColumnDef="town-longitude">
+      <th mat-header-cell *matHeaderCellDef> 経度 </th>
+      <td mat-cell *matCellDef="let element"> {{element.x}} </td>
+    </ng-container> -->
+    <!-- 郵便番号カラム -->
+    <!-- <ng-container matColumnDef="postal">
+      <th mat-header-cell *matHeaderCellDef> 郵便番号 </th>
+      <td mat-cell *matCellDef="let element"> 〒{{slice(floor(element.postal/10000),3)}}-{{slice(element.postal%10000,4)}} </td>
+    </ng-container> -->
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+</div>

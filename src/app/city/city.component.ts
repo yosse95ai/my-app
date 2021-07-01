@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ConfigService } from '../service/config.service';
+
 import { CityService } from '../service/city.service';
-import { Observable } from 'rxjs';
+import { WeatherService } from '../service/weather.service';
 
 // 独自構造体
 interface cityRes {
@@ -18,10 +18,38 @@ interface townInfo {
   prefecture: string;
   postal: number;
 }
+
+interface weatherInfo {
+  coord: { lon: number; lat: number; };
+  weather: weather[];
+  base: string;
+  main: {
+    temp: number; feels_like: number; temp_min: number;
+    temp_max: number; pressure: number; humidity: number;
+    sea_level: number; grnd_level: number;
+  };
+  visibility: number;
+  wind: { speed: number; deg: number; gust: number; };
+  clouds: { all: number; };
+  dt: number;
+  sys: { type: number; id: number; country: string; sunrise: number; sunset: number; };
+  timezone: number;
+  id: number;
+  name: string;
+  cod: number;
+}
+interface weather {
+  id: number;
+  main: string;
+  description: string;
+  icon: string;
+}
 // グローバル変数的なヤツのお試し
 let CityApiData: cityRes[];
 let TownApiData: townInfo[];
 let TownInfoInit: townInfo;
+let initWather: weatherInfo;
+
 
 @Component({
   selector: 'app-city',
@@ -39,10 +67,11 @@ export class CityComponent implements OnInit {
   pref_list: string[] = [];
   city_list: string[] = [];
   town_list: townInfo[] = [];
+  selectedTownWeather: weatherInfo = initWather;
 
   constructor(
-    private config: ConfigService,
-    private cityService: CityService
+    private cityService: CityService,
+    private weatherService: WeatherService
   ) { }
 
   // コンポーネント読み込み時処理
@@ -130,6 +159,15 @@ export class CityComponent implements OnInit {
         }
       });
     }
+  }
+
+  /**
+   * フォームに基づいて天気を検索
+   */
+  updateWeather(): void{
+    this.weatherService.getWeather(this.selectedTown.y, this.selectedTown.x).subscribe(res => {
+      this.selectedTownWeather = res;
+    });
   }
 
   /**

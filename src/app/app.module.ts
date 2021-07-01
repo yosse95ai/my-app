@@ -20,11 +20,13 @@ import { AppRoutingModule } from './app-routing.module';
 // コンポーネント
 import { AppComponent } from './app.component';
 import { CityComponent } from './city/city.component';
+import { WeatherComponent } from './weather/weather.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    CityComponent
+    CityComponent,
+    WeatherComponent
   ],
   imports: [
     BrowserModule,
