@@ -2,10 +2,12 @@
 // `ng build` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
+import { apiKeys } from "./apikey";
+
 export const environment = {
-  production: false,
-  apiBase: 'http://geoapi.heartrails.com/api/json?',
-  apiUrl: 'http://geoapi.heartrails.com/api/json?method=getCities'
+  production: false, apiBaseUrl: 'http://geoapi.heartrails.com/api/json?',
+
+  ...apiKeys,
 };
 
 /*

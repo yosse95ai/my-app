@@ -28,12 +28,12 @@ export class CityService {
   }
 
   getCities(prefecture: string): Observable<any> {
-    let url = environment.apiBase + "method=getCities&prefecture=" + prefecture;
+    let url = environment.apiBaseUrl + "method=getCities&prefecture=" + prefecture;
     return this.http.get(url);
   }
 
   getTowns(city: string): Observable<any> {
-    let url = environment.apiBase + "method=getTowns&city=" + city;
+    let url = environment.apiBaseUrl + "method=getTowns&city=" + city;
     return this.http.get(url);
   }
 
