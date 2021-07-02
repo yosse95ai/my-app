@@ -58,7 +58,7 @@ let initWather: weatherInfo;
 })
 export class CityComponent implements OnInit {
 
-  title = '市町村区検索API';
+  title = 'お天気サーチ';
   displayedColumns: string[] = ['town', 'town-kana', 'town-latitude', 'town-longitude', 'postal']; // 町名表示用
   dataSource = CityApiData;       // Apiで取得した情報
   dataSourceTown = TownApiData;   // Apiで取得した町の情報
@@ -151,12 +151,25 @@ export class CityComponent implements OnInit {
         this.dataSourceTown = tmp['location'];
         this.sortTowns4name();
         this.town_list = [];
+        let latitude: number = 0;
+        let longitude: number = 0;
         for (let i = 0; i < this.dataSourceTown.length; ++i) {
           // (そのた)は除外する。
           if (this.dataSourceTown[i].town_kana != '(そのた)') {
             this.town_list.push(this.dataSourceTown[i]);
           }
+          latitude += +this.dataSourceTown[i].y;
+          longitude += +this.dataSourceTown[i].x;
         }
+        // 指定なし用の緯度経度(全体平均)
+        latitude /= this.dataSourceTown.length;
+        longitude /= this.dataSourceTown.length;
+        let otherTown: townInfo = {
+          city: city_name, city_kana: this.dataSourceTown[0].town_kana,
+          town: '指定なし', town_kana: '()', x: longitude, y: latitude,
+          postal: 0, prefecture: this.dataSourceTown[0].prefecture
+        };
+        this.town_list.unshift(otherTown);
       });
     }
   }

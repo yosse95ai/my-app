@@ -1,32 +1,37 @@
 <div id="mn" *ngIf="townWeather">
-  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-    <!-- 天気カラム -->
-    <ng-container matColumnDef="weather">
-      <th mat-header-cell *matHeaderCellDef> 天気 </th>
-      <td mat-cell *matCellDef="let element">{{element.weather_main}}</td>
-    </ng-container>
-    <!-- 状態カラム -->
-    <ng-container matColumnDef="desc">
-      <th mat-header-cell *matHeaderCellDef> 状態 </th>
-      <td mat-cell *matCellDef="let element"> {{element.weather_description}} </td>
-    </ng-container>
-    <!-- 緯度カラム -->
-    <!-- <ng-container matColumnDef="town-latitude">
-      <th mat-header-cell *matHeaderCellDef> 緯度 </th>
-      <td mat-cell *matCellDef="let element"> {{element.y}} </td>
-    </ng-container> -->
-    <!-- 経度カラム -->
-    <!-- <ng-container matColumnDef="town-longitude">
-      <th mat-header-cell *matHeaderCellDef> 経度 </th>
-      <td mat-cell *matCellDef="let element"> {{element.x}} </td>
-    </ng-container> -->
-    <!-- 郵便番号カラム -->
-    <!-- <ng-container matColumnDef="postal">
-      <th mat-header-cell *matHeaderCellDef> 郵便番号 </th>
-      <td mat-cell *matCellDef="let element"> 〒{{slice(floor(element.postal/10000),3)}}-{{slice(element.postal%10000,4)}} </td>
-    </ng-container> -->
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+        <!-- 天気カラム -->
+        <ng-container matColumnDef="weather">
+            <th mat-header-cell *matHeaderCellDef> 天気 </th>
+            <td mat-cell *matCellDef="let element">{{element.weather_main}}</td>
+        </ng-container>
+        <!-- 状態カラム -->
+        <ng-container matColumnDef="desc">
+            <th mat-header-cell *matHeaderCellDef> 状態 </th>
+            <td mat-cell *matCellDef="let element"> {{element.weather_description}} </td>
+        </ng-container>
+        <!-- 気温カラム -->
+        <ng-container matColumnDef="temp">
+            <th mat-header-cell *matHeaderCellDef> 気温 </th>
+            <td mat-cell *matCellDef="let element"> {{(element.temp- 273.15).toFixed(2)}}℃ </td>
+        </ng-container>
+        <!-- 最低気温カラム -->
+        <ng-container matColumnDef="temp_l">
+            <th mat-header-cell *matHeaderCellDef> 最低気温 </th>
+            <td mat-cell *matCellDef="let element"> {{(element.temp_min- 273.15).toFixed(2)}}℃ </td>
+        </ng-container>
+        <!-- 最高気温カラム -->
+        <ng-container matColumnDef="temp_h">
+            <th mat-header-cell *matHeaderCellDef> 最高気温 </th>
+            <td mat-cell *matCellDef="let element"> {{(element.temp_max- 273.15).toFixed(2)}}℃</td>
+        </ng-container>
+        <!-- 湿度カラム -->
+        <ng-container matColumnDef="hum">
+            <th mat-header-cell *matHeaderCellDef> 湿度 </th>
+            <td mat-cell *matCellDef="let element"> {{element.humidity}}%</td>
+        </ng-container>
 
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-  </table>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
 </div>

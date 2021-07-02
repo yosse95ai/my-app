@@ -54,7 +54,7 @@ export class WeatherComponent implements OnInit {
   @Input() townWeather: weatherInfo = initWather;
   displayedColumns: string[] = [
     'weather', 'desc',
-    //'temp', 'temp_l', 'temp_h', 'hum'
+    'temp', 'temp_l', 'temp_h', 'hum'
   ]; // 町名表示用
   dataSource = nonNestData;
   ngOnInit(): void {
