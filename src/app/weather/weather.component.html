@@ -34,4 +34,5 @@
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
+<app-daily-temp-chart [dataSet]='dataSet'></app-daily-temp-chart>
 </div>

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, SimpleChange, SimpleChanges } from '@angular/core';
+import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
 import { WeatherService } from '../service/weather.service';
 
 interface weatherInfoNonNest {
@@ -57,6 +57,8 @@ export class WeatherComponent implements OnInit {
     'temp', 'temp_l', 'temp_h', 'hum'
   ]; // 町名表示用
   dataSource = nonNestData;
+  dataSet: number[] = [];
+
   ngOnInit(): void {
   }
 
@@ -65,6 +67,7 @@ export class WeatherComponent implements OnInit {
       //Called before any other lifecycle hook. Use it to inject dependencies, but avoid any serious work here.
       //Add '${implements OnChanges}' to the class.
       let val = changes['townWeather'].currentValue;
+      this.dataSet = [0, 0, 1, 1, 2, 3, 3, 4, 4, 5, 6, 6, 7, 7, 8, 9, 9, 10, 10, 11, 12, 12, 13, 13];
       this.weatherService.getWeather(val.coord.lat, val.coord.lon).subscribe(info => {
         let ret: weatherInfoNonNest[] = [];
         let weather = info.weather;
