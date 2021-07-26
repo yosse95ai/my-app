@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
+import { ChartsModule } from 'ng2-charts';
 
 //アニメーションモジュールインポート
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -8,7 +9,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 // HTTPサービスインポート
 import { HttpClientModule } from '@angular/common/http';
 
-// ボタン・チェックボックスモジュールインポート
+// Angular Material モジュールインポート
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatTableModule } from '@angular/material/table';
@@ -21,22 +22,25 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CityComponent } from './city/city.component';
 import { WeatherComponent } from './weather/weather.component';
+import { DailyTempChartComponent } from './weather/daily-temp-chart/daily-temp-chart.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     CityComponent,
-    WeatherComponent
+    WeatherComponent,
+    DailyTempChartComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
+    ChartsModule,
     //アニメーションモジュールインポート
     BrowserAnimationsModule,
     // HTTPサービスインポート
     HttpClientModule,
     FormsModule,
-    // ボタン・チェックボックスモジュールインポート
+    // Angular Material モジュールインポート
     MatButtonModule,
     MatCheckboxModule,
     MatTableModule,
