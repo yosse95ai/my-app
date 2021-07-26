@@ -166,7 +166,7 @@ export class CityComponent implements OnInit {
         longitude /= this.dataSourceTown.length;
         let otherTown: townInfo = {
           city: city_name, city_kana: this.dataSourceTown[0].town_kana,
-          town: '指定なし', town_kana: '()', x: longitude, y: latitude,
+          town: '-指定なし-', town_kana: '()', x: longitude, y: latitude,
           postal: 0, prefecture: this.dataSourceTown[0].prefecture
         };
         this.town_list.unshift(otherTown);

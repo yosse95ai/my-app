@@ -1,0 +1,10 @@
+version: '3'
+
+services:
+    fe_app:
+        build: .
+        ports:
+            - '9000:80'
+        volumes: 
+            - '.:/usr/local/app'
+        tty: true
