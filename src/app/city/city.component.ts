@@ -58,7 +58,7 @@ let initWather: weatherInfo;
 })
 export class CityComponent implements OnInit {
 
-  title = 'お天気サーチ';
+  title = 'Weather Report';
   displayedColumns: string[] = ['town', 'town-kana', 'town-latitude', 'town-longitude', 'postal']; // 町名表示用
   dataSource = CityApiData;       // Apiで取得した情報
   dataSourceTown = TownApiData;   // Apiで取得した町の情報

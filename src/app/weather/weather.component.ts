@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, SimpleChange, SimpleChanges } from '@angular/core';
+import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
 import { WeatherService } from '../service/weather.service';
 
 interface weatherInfoNonNest {
@@ -49,7 +49,7 @@ let nonNestData: weatherInfoNonNest[];
 })
 export class WeatherComponent implements OnInit {
 
-  constructor(private weatherService: WeatherService) {  }
+  constructor(private weatherService: WeatherService) { }
 
   @Input() townWeather: weatherInfo = initWather;
   displayedColumns: string[] = [
@@ -57,6 +57,8 @@ export class WeatherComponent implements OnInit {
     'temp', 'temp_l', 'temp_h', 'hum'
   ]; // 町名表示用
   dataSource = nonNestData;
+  dataSet: any;
+
   ngOnInit(): void {
   }
 
@@ -102,9 +104,13 @@ export class WeatherComponent implements OnInit {
           r.weather_id = info.weather[i].id;
           r.weather_main = info.weather[i].main;
           ret.push(r);
+          break;
         }
         this.dataSource = ret;
       });
+      this.weatherService.getHourlyWeather(val.coord.lat, val.coord.lon).subscribe(info => {
+        this.dataSet = info;
+      })
     }
   }
 }

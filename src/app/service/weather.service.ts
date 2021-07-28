@@ -9,11 +9,15 @@ import { environment } from 'src/environments/environment';
 export class WeatherService {
 
   private urlBase: string = environment.weatherUrlBase + "appid=" + environment.OPEN_WEATHERT_MAP;
+  private hourlyUrl: string = environment.hourlyOneCallUrl + "appid=" + environment.OPEN_WEATHERT_MAP;
   constructor(private http: HttpClient) {   }
 
   getWeather(lat: number, lon: number): Observable<any> {
     let url: string = this.urlBase + "&lat=" + lat + "&lon=" + lon;
     return this.http.get(url);
   }
-
+  getHourlyWeather(lat: number, lon: number): Observable<any>{
+    let url: string = this.hourlyUrl + "&lat=" + lat + "&lon=" + lon;
+    return this.http.get(url);
+  }
 }
