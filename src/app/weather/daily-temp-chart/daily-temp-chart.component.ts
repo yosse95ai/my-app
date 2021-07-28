@@ -1,6 +1,7 @@
 import { Component, Input, SimpleChanges } from '@angular/core';
-import { ChartOptions,ChartDataSets, ChartType } from 'chart.js';
+import { ChartDataSets, ChartType } from 'chart.js';
 import { Color, Label } from 'ng2-charts';
+
 
 @Component({
   selector: 'app-daily-temp-chart',
@@ -9,44 +10,55 @@ import { Color, Label } from 'ng2-charts';
 })
 export class DailyTempChartComponent {
 
-  @Input() dataSet: number[]=[];
+  @Input() dataSet: any;
+  private datas: number[] = [];
+  private indexs: string[] = [];
+  private minimam = 0;
 
   ngOnChanges(changes: SimpleChanges): void {
     //Called before any other lifecycle hook. Use it to inject dependencies, but avoid any serious work here.
     //Add '${implements OnChanges}' to the class.
     if (changes['dataSet'].currentValue) {
       let val = changes['dataSet'].currentValue;
-      this.lineChartData[0].data = val;
+      for (let i = 0; i < val.hourly.length; i++) {
+        this.indexs[i] = (new Date(val.hourly[i].dt * 1000).getHours().toString());
+        this.datas[i] = (+(val.hourly[i].temp - 273.15).toFixed(2));
+      }
     }
   }
   // data
-  lineChartData: ChartDataSets[] = [
+  public lineChartData: ChartDataSets[] = [
     {
-    data: this.dataSet,
-    label: 'Daily Temp'
+      data: this.datas,
+      label: 'Daily Temp'
     },
   ];
 
   // labels name
-  lineChartLabels: Label[] = [
-    "0", "1", "2", "3", "4", "5", "6", "7", "8", "9",
-    "10", "11", "12", "13", "14", "15", "16", "17", "18", "19",
-    "20", "21", "22", "23"
-  ]
+  public lineChartLabels: Label[] = this.indexs;
 
-  lineChartOptions = {
+  public lineChartOptions = {
     responsive: true,
+    scales: {
+      yAxes: [{
+        ticks: {
+          steps: 10,
+          stepValue: 10,
+          min: this.minimam
+        }
+      }]
+    }
   }
 
   // Colors
-  lineChartColors: Color[] = [
+  public lineChartColors: Color[] = [
     {
       borderColor: 'black',
-      backgroundColor:'rgba(255,0,255,0.28)',
+      backgroundColor: 'rgba(255,0,255,0.28)',
     },
   ]
 
-  lineChartLegend = true; // グラフの属性ラベル
-  lineChartPlugins = [];
-  lineChartType: ChartType = 'line'; // グラフの種類
+  public lineChartLegend = true; // グラフの属性ラベル
+  public lineChartPlugins = [];
+  public lineChartType: ChartType = 'line'; // グラフの種類
 }
