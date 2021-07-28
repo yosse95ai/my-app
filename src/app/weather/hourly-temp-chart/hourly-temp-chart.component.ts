@@ -4,11 +4,11 @@ import { Color, Label } from 'ng2-charts';
 
 
 @Component({
-  selector: 'app-daily-temp-chart',
-  templateUrl: './daily-temp-chart.component.html',
-  styleUrls: ['./daily-temp-chart.component.scss']
+  selector: 'app-hourly-temp-chart',
+  templateUrl: './hourly-temp-chart.component.html',
+  styleUrls: ['./hourly-temp-chart.component.scss']
 })
-export class DailyTempChartComponent {
+export class HourlyTempChartComponent {
 
   @Input() dataSet: any;
   private datas: number[] = [];

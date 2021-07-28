@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DailyTempChartComponent } from './daily-temp-chart.component';
+import { HourlyTempChartComponent } from './hourly-temp-chart.component';
 
-describe('DailyTempChartComponent', () => {
-  let component: DailyTempChartComponent;
-  let fixture: ComponentFixture<DailyTempChartComponent>;
+describe('HourlyTempChartComponent', () => {
+  let component: HourlyTempChartComponent;
+  let fixture: ComponentFixture<HourlyTempChartComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ DailyTempChartComponent ]
+      declarations: [ HourlyTempChartComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(DailyTempChartComponent);
+    fixture = TestBed.createComponent(HourlyTempChartComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

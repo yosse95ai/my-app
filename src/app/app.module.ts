@@ -22,14 +22,14 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CityComponent } from './city/city.component';
 import { WeatherComponent } from './weather/weather.component';
-import { DailyTempChartComponent } from './weather/daily-temp-chart/daily-temp-chart.component';
+import { HourlyTempChartComponent } from './weather/hourly-temp-chart/hourly-temp-chart.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     CityComponent,
     WeatherComponent,
-    DailyTempChartComponent,
+    HourlyTempChartComponent,
   ],
   imports: [
     BrowserModule,
