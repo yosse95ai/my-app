@@ -63,7 +63,7 @@ export class HourlyTempChartComponent {
   public lineChartData: ChartDataSets[] = [
     {
       data: this.datas,
-      label: 'Daily Temp'
+      label: 'Hourly Temp'
     },
   ];
 
