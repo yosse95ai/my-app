@@ -52,7 +52,7 @@ export class HourlyTempChartComponent {
               max: this.maximam
             }
           }]
-        }
+        },
       }
 
       // インデックスの更新
@@ -82,13 +82,14 @@ export class HourlyTempChartComponent {
           max: this.maximam
         }
       }]
-    }
+    },
+    
   }
 
   // Colors
   public lineChartColors: Color[] = [
     {
-      borderColor: 'black',
+      borderColor: 'rgba(10, 0, 0, 1.0)',
       backgroundColor: 'rgba(255,0,255,0.28)',
     },
   ]
