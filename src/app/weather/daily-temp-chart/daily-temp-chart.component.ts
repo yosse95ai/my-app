@@ -6,11 +6,11 @@ interface data {
 }
 
 @Component({
-  selector: 'app-hourly-temp-chart',
-  templateUrl: './hourly-temp-chart.component.html',
-  styleUrls: ['./hourly-temp-chart.component.scss']
+  selector: 'app-daily-temp-chart',
+  templateUrl: './daily-temp-chart.component.html',
+  styleUrls: ['./daily-temp-chart.component.scss']
 })
-export class HourlyTempChartComponent {
+export class DailyTempChartComponent {
 
   @Input() dataSet: any;
   private datas: data[] = [];
@@ -21,6 +21,7 @@ export class HourlyTempChartComponent {
   private h = 900;
   private HEIGHT = 350;
   private WIDTH = 480
+
 
   constructor() {
     this.w = screen.availWidth;
@@ -36,20 +37,21 @@ export class HourlyTempChartComponent {
         this.HEIGHT * window.innerHeight / this.h
       ];
     }
-  }
+   }
 
   ngOnChanges(changes: SimpleChanges): void {
     //Called before any other lifecycle hook. Use it to inject dependencies, but avoid any serious work here.
     //Add '${implements OnChanges}' to the class.
     if (changes['dataSet'].currentValue) {
       let val = changes['dataSet'].currentValue;
-
       // APIコールのデータを入れ込む
-      for (let i = 0; i < 24; i++) {
-        let name: string = new Date(val.hourly[i].dt * 1000).getHours().toString();
-        this.datas[i] = { name: name, value: +(val.hourly[i].temp - 273.15).toFixed(2) };
-        this.minMax[i] = +(val.hourly[i].temp - 273.15).toFixed(2);
+      for (let i = 0; i < val.daily.length; i++) {
+        let utc = new Date(val.daily[i].dt * 1000);
+        let name = utc.getDate().toString() + '(' + this.num2Day(utc.getDay()) + ')';
+        this.datas[i] = { name: name, value: +(val.daily[i].feels_like.day - 273.15).toFixed(2) };
+        this.minMax[i] = +(val.daily[i].feels_like.day - 273.15).toFixed(2);
       }
+
       // 上限下限の変更
       this.minimam = +Math.min.apply(null, this.minMax).toFixed(0) - 2.0;
       this.maximam = +Math.max.apply(null, this.minMax).toFixed(0) + 2.0;
@@ -70,7 +72,7 @@ export class HourlyTempChartComponent {
   }
 
   // View Size
-  public view: any = [this.WIDTH, this.HEIGHT];
+  view: any = [this.WIDTH, this.HEIGHT];
 
   // Data
   public lineChartData = [
@@ -87,7 +89,7 @@ export class HourlyTempChartComponent {
   yAxis: boolean = true;
   showYAxisLabel: boolean = true;
   showXAxisLabel: boolean = true;
-  xAxisLabel: string = "Hour";
+  xAxisLabel: string = "Day";
   yAxisLabel: string = "Temperature";
   timeline: boolean = true;
   yScaleMax: number = this.maximam;
@@ -95,9 +97,14 @@ export class HourlyTempChartComponent {
 
   // Colors
   colorScheme = {
-    domain: ["#545AA4", "#A10A28", "#2CC7B4", "#AAAAAA"],
+    domain: ["#5AA454", "#A10A28", "#C7B42C", "#AAAAAA"],
   };
 
+
+  private num2Day(num: number): string {
+    let DAY: string[] = ['Mon', 'Tue', 'Wed', 'Thr', 'Fri', 'Sat', 'San'];
+    return DAY[num];
+  }
 
   onResize(event: any) {
     if (window.innerWidth > 720) {

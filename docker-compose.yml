@@ -4,7 +4,7 @@ services:
     fe_app:
         build: .
         ports:
-            - '9000:80'
+            - '80:9000'
         volumes: 
             - '.:/usr/local/app'
         tty: true
