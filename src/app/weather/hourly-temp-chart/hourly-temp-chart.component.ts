@@ -1,7 +1,9 @@
 import { Component, Input, SimpleChanges } from '@angular/core';
-import { ChartDataSets, ChartType } from 'chart.js';
-import { Color, Label } from 'ng2-charts';
 
+interface data {
+  name: string,
+  value: number
+}
 
 @Component({
   selector: 'app-hourly-temp-chart',
@@ -11,10 +13,30 @@ import { Color, Label } from 'ng2-charts';
 export class HourlyTempChartComponent {
 
   @Input() dataSet: any;
-  private datas: number[] = [];
-  private indexs: string[] = [];
+  private datas: data[] = [];
+  private minMax: number[] = [];
   private minimam = 0;
   private maximam = 50;
+  private w = 1600;
+  private h = 900;
+  private HEIGHT = 350;
+  private WIDTH = 480
+
+  constructor() {
+    this.w = screen.availWidth;
+    this.h = screen.availHeight;
+    if (window.innerWidth > 720) {
+      this.view = [
+        this.WIDTH * window.innerWidth / this.w,
+        this.HEIGHT * window.innerHeight / this.h
+      ];
+    } else {
+      this.view = [
+        2 * this.WIDTH * window.innerWidth / this.w - 100,
+        this.HEIGHT * window.innerHeight / this.h
+      ];
+    }
+  }
 
   ngOnChanges(changes: SimpleChanges): void {
     //Called before any other lifecycle hook. Use it to inject dependencies, but avoid any serious work here.
@@ -24,77 +46,70 @@ export class HourlyTempChartComponent {
 
       // APIコールのデータを入れ込む
       for (let i = 0; i < 24; i++) {
-        this.indexs[i] = (new Date(val.hourly[i].dt * 1000).getHours().toString());
-        this.datas[i] = +(val.hourly[i].temp - 273.15).toFixed(2);
+        let name: string = new Date(val.hourly[i].dt * 1000).getHours().toString();
+        this.datas[i] = { name: name, value: +(val.hourly[i].temp - 273.15).toFixed(2) };
+        this.minMax[i] = +(val.hourly[i].temp - 273.15).toFixed(2);
       }
-
       // 上限下限の変更
-      this.minimam = +Math.min.apply(null, this.datas).toFixed(0) - 2.0;
-      this.maximam = +Math.max.apply(null, this.datas).toFixed(0) + 2.0;
+      this.minimam = +Math.min.apply(null, this.minMax).toFixed(0) - 2.0;
+      this.maximam = +Math.max.apply(null, this.minMax).toFixed(0) + 2.0;
+
 
       // チャートのデータの更新
       this.lineChartData = [
         {
-          data: this.datas,
-          label: 'Daily Temp'
+          name: 'Daily tempature',
+          series: this.datas
         },
       ];
 
       // オプションの更新
-      this.lineChartOptions = {
-        responsive: true,
-        scales: {
-          yAxes: [{
-            ticks: {
-              steps: 10,
-              stepValue: 10,
-              min: this.minimam,
-              max: this.maximam
-            }
-          }]
-        },
-      }
-
-      // インデックスの更新
-      this.lineChartLabels = this.indexs;
+      this.yScaleMax = this.maximam;
+      this.yScaleMin = this.minimam;
     }
   }
-  // data
-  public lineChartData: ChartDataSets[] = [
+
+  // View Size
+  public view: any = [this.WIDTH, this.HEIGHT];
+
+  // Data
+  public lineChartData = [
     {
-      data: this.datas,
-      label: 'Hourly Temp'
+      name: "Daily temperature",
+      series: this.datas
     },
   ];
-
-  // labels name
-  public lineChartLabels: Label[] = this.indexs;
-
   // chart options
-  public lineChartOptions = {
-    responsive: true,
-    scales: {
-      yAxes: [{
-        ticks: {
-          steps: 10,
-          stepValue: 10,
-          min: this.minimam,
-          max: this.maximam
-        }
-      }]
-    },
-    
-  }
+  legend: boolean = false;
+  showLabels: boolean = true;
+  animations: boolean = true;
+  xAxis: boolean = true;
+  yAxis: boolean = true;
+  showYAxisLabel: boolean = true;
+  showXAxisLabel: boolean = true;
+  xAxisLabel: string = "Hour";
+  yAxisLabel: string = "Temperature";
+  timeline: boolean = true;
+  yScaleMax: number = this.maximam;
+  yScaleMin: number = this.minimam;
 
   // Colors
-  public lineChartColors: Color[] = [
-    {
-      borderColor: 'rgba(10, 0, 0, 1.0)',
-      backgroundColor: 'rgba(255,0,255,0.28)',
-    },
-  ]
+  colorScheme = {
+    domain: ["#545AA4", "#A10A28", "#2CC7B4", "#AAAAAA"],
+  };
 
-  public lineChartLegend = true; // グラフの属性ラベル
-  public lineChartPlugins = [];
-  public lineChartType: ChartType = 'line'; // グラフの種類
+
+  onResize(event: any) {
+    if (window.innerWidth > 720) {
+      this.view = [
+        this.WIDTH * event.target.innerWidth / this.w,
+        this.HEIGHT * event.target.innerHeight / this.h
+      ];
+    } else {
+      this.view = [
+        2 * this.WIDTH * event.target.innerWidth / this.w - 100,
+        this.HEIGHT * event.target.innerHeight / this.h
+      ];
+    }
+  }
 }

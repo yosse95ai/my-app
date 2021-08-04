@@ -49,19 +49,44 @@ let nonNestData: weatherInfoNonNest[];
 })
 export class WeatherComponent implements OnInit {
 
-  constructor(private weatherService: WeatherService) { }
+  constructor(private weatherService: WeatherService) {
+    if (window.innerWidth <= 720) {
+      this.layout = "column";
+      this.flex = "100";
+    }
+    else {
+      this.layout = "row";
+      this.flex = "1 1 50%";
+    }
+  }
+
+  ngOnInit(): void {
+  }
 
   @Input() townWeather: weatherInfo = initWather;
+
   displayedColumns: string[] = [
     'weather', 'desc',
     'temp', 'temp_l', 'temp_h', 'hum'
   ]; // 町名表示用
   dataSource = nonNestData;
-  dataSet: any;
+  hourlySet: any;
+  dailySet: any;
 
-  ngOnInit(): void {
+  public layoutGap: string = '24px';
+  public layout: string = "row";
+  public flex: string = "1 1 50%";
+
+  displaySizeChange(event: any): void {
+    if (event.target.innerWidth <= 720) {
+      this.layout = "column";
+      this.flex = "100";
+    }
+    else {
+      this.layout = "row";
+      this.flex = "1 1 50%";
+    }
   }
-
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['townWeather'].currentValue) {
       //Called before any other lifecycle hook. Use it to inject dependencies, but avoid any serious work here.
@@ -109,7 +134,10 @@ export class WeatherComponent implements OnInit {
         this.dataSource = ret;
       });
       this.weatherService.getHourlyWeather(val.coord.lat, val.coord.lon).subscribe(info => {
-        this.dataSet = info;
+        this.hourlySet = info;
+      })
+      this.weatherService.getDailyWeather(val.coord.lat, val.coord.lon).subscribe(info => {
+        this.dailySet = info;
       })
     }
   }
