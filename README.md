@@ -4,7 +4,9 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 ## Demo Movie
 This is Angular application demo movie.
+
 Simple responsive support.
+
 https://user-images.githubusercontent.com/51770462/128141737-fe4214cf-80a3-4cce-8092-e01999ffd637.mp4
 
 
