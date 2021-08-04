@@ -48,8 +48,8 @@ export class DailyTempChartComponent {
       for (let i = 0; i < val.daily.length; i++) {
         let utc = new Date(val.daily[i].dt * 1000);
         let name = utc.getDate().toString() + '(' + this.num2Day(utc.getDay()) + ')';
-        this.datas[i] = { name: name, value: +(val.daily[i].feels_like.day - 273.15).toFixed(2) };
-        this.minMax[i] = +(val.daily[i].feels_like.day - 273.15).toFixed(2);
+        this.datas[i] = { name: name, value: +(val.daily[i].temp.day - 273.15).toFixed(2) };
+        this.minMax[i] = +(val.daily[i].temp.day - 273.15).toFixed(2);
       }
 
       // 上限下限の変更
