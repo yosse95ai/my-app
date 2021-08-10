@@ -14,6 +14,7 @@ export class HourlyTempChartComponent {
 
   @Input() dataSet: any;
   private datas: data[] = [];
+  private feelsLike: data[] = [];
   private minMax: number[] = [];
   private minimam = 0;
   private maximam = 50;
@@ -48,7 +49,9 @@ export class HourlyTempChartComponent {
       for (let i = 0; i < 24; i++) {
         let name: string = new Date(val.hourly[i].dt * 1000).getHours().toString();
         this.datas[i] = { name: name, value: +(val.hourly[i].temp - 273.15).toFixed(2) };
+        this.feelsLike[i] = { name: name, value: +(val.hourly[i].feels_like - 273.15).toFixed(2) };
         this.minMax[i] = +(val.hourly[i].temp - 273.15).toFixed(2);
+        this.minMax[i + 24] = +(val.hourly[i].feels_like - 273.15).toFixed(2);
       }
       // 上限下限の変更
       this.minimam = +Math.min.apply(null, this.minMax).toFixed(0) - 2.0;
@@ -58,9 +61,13 @@ export class HourlyTempChartComponent {
       // チャートのデータの更新
       this.lineChartData = [
         {
-          name: 'Daily tempature',
+          name: "Temperature",
           series: this.datas
         },
+        {
+          name: 'Feels like',
+          series: this.feelsLike
+        }
       ];
 
       // オプションの更新
@@ -75,9 +82,13 @@ export class HourlyTempChartComponent {
   // Data
   public lineChartData = [
     {
-      name: "Daily temperature",
+      name: "Temperature",
       series: this.datas
     },
+    {
+      name: 'Feels like',
+      series: this.feelsLike
+    }
   ];
   // chart options
   legend: boolean = false;
@@ -95,7 +106,7 @@ export class HourlyTempChartComponent {
 
   // Colors
   colorScheme = {
-    domain: ["#545AA4", "#A10A28", "#2CC7B4", "#AAAAAA"],
+    domain: ["#5AA454", "#C7B42C"],
   };
 
 
