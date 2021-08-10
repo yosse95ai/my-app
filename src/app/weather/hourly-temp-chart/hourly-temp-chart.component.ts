@@ -106,7 +106,7 @@ export class HourlyTempChartComponent {
 
   // Colors
   colorScheme = {
-    domain: ["#545AA4", "#A10A28", "#2CC7B4", "#AAAAAA"],
+    domain: ["#5AA454", "#C7B42C"],
   };
 
 

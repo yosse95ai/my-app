@@ -14,6 +14,9 @@ export class DailyTempChartComponent {
 
   @Input() dataSet: any;
   private datas: data[] = [];
+  private feelsLike: data[] = [];
+  private maxDatas: data[] = [];
+  private minDatas: data[] = [];
   private minMax: number[] = [];
   private minimam = 0;
   private maximam = 50;
@@ -37,7 +40,7 @@ export class DailyTempChartComponent {
         this.HEIGHT * window.innerHeight / this.h
       ];
     }
-   }
+  }
 
   ngOnChanges(changes: SimpleChanges): void {
     //Called before any other lifecycle hook. Use it to inject dependencies, but avoid any serious work here.
@@ -49,7 +52,11 @@ export class DailyTempChartComponent {
         let utc = new Date(val.daily[i].dt * 1000);
         let name = utc.getDate().toString() + '(' + this.num2Day(utc.getDay()) + ')';
         this.datas[i] = { name: name, value: +(val.daily[i].temp.day - 273.15).toFixed(2) };
-        this.minMax[i] = +(val.daily[i].temp.day - 273.15).toFixed(2);
+        this.feelsLike[i] = { name: name, value: +(val.daily[i].feels_like.day - 273.15).toFixed(2) };
+        this.maxDatas[i] = { name: name, value: +(val.daily[i].temp.max - 273.15).toFixed(2) };
+        this.minDatas[i] = { name: name, value: +(val.daily[i].temp.min - 273.15).toFixed(2) };
+        this.minMax[i] = +(val.daily[i].temp.min - 273.15).toFixed(2);
+        this.minMax[i + val.daily.length] = +(val.daily[i].feels_like.day - 273.15).toFixed(2);
       }
 
       // 上限下限の変更
@@ -60,9 +67,21 @@ export class DailyTempChartComponent {
       // チャートのデータの更新
       this.lineChartData = [
         {
-          name: 'Daily tempature',
+          name: 'Maximum',
+          series: this.maxDatas
+        },
+        {
+          name: 'Feels like',
+          series: this.feelsLike
+        },
+        {
+          name: 'Daytime',
           series: this.datas
         },
+        {
+          name: 'Minimum',
+          series: this.minDatas
+        }
       ];
 
       // オプションの更新
@@ -97,7 +116,7 @@ export class DailyTempChartComponent {
 
   // Colors
   colorScheme = {
-    domain: ["#5AA454", "#A10A28", "#C7B42C", "#AAAAAA"],
+    domain: ["#A10A28", "#5AA454", "#C7B42C", "#AAAAFF"],
   };
 
 
