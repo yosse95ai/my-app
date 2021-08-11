@@ -119,27 +119,6 @@ export class CityComponent implements OnInit {
   }
 
   /**
-   * フォームの値をもとに町情報を取得
-   * ※この関数の代わりに天気検索する
-   */
-  searchTowns(): void {
-    if (this.city_name) {
-      this.cityService.getTowns(this.city_name).subscribe(res => {
-        let tmp = res['response']
-        this.dataSourceTown = tmp['location'];
-        this.sortTowns4name();
-        this.town_list = [];
-        for (let i = 0; i < this.dataSourceTown.length; ++i) {
-          // (そのた)は除外する。
-          if (this.dataSourceTown[i].town_kana != '(そのた)') {
-            this.town_list.push(this.dataSourceTown[i]);
-          }
-        }
-      });
-    }
-  }
-
-  /**
    * - フォームの値をもとに町情報を取得
    * - 地区名フォームの値が切り替えられたときに発火
    * @param city_name 市町村区の名前
