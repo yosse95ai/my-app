@@ -12,7 +12,7 @@ This is Angular application demo movie.
 
 Simple responsive support.
 
-https://user-images.githubusercontent.com/51770462/128141737-fe4214cf-80a3-4cce-8092-e01999ffd637.mp4
+https://user-images.githubusercontent.com/51770462/129039640-6755b3de-bf82-49f2-9aa8-ee3b49ac2448.mp4
 
 
 ## Development server
