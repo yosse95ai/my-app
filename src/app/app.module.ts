@@ -30,6 +30,10 @@ import { WeatherComponent } from './weather/weather.component';
 import { HourlyTempChartComponent } from './weather/hourly-temp-chart/hourly-temp-chart.component';
 import { DailyTempChartComponent } from './weather/daily-temp-chart/daily-temp-chart.component';
 
+// デバッグ用コンポーネント
+import { DebugComponent } from './debug/debug.component';
+import { DebugListTableComponent } from './debug/debug-list-table/debug-list-table.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -37,6 +41,8 @@ import { DailyTempChartComponent } from './weather/daily-temp-chart/daily-temp-c
     WeatherComponent,
     HourlyTempChartComponent,
     DailyTempChartComponent,
+    DebugComponent,
+    DebugListTableComponent,
   ],
   imports: [
     BrowserModule,
