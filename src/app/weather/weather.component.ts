@@ -1,6 +1,8 @@
 import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
 import { WeatherService } from '../service/weather.service';
 
+import { weatherInfo } from 'src/app/interfaces/weatherInfo.interface';
+
 interface weatherInfoNonNest {
   lon?: number; lat?: number; base?: string;
   temp?: number; feels_like?: number; temp_min?: number;
@@ -12,31 +14,6 @@ interface weatherInfoNonNest {
   timezone?: number; id?: number; name?: string; cod?: number;
   weather_id?: number; weather_main?: string;
   weather_description?: string; weather_icon?: string;
-}
-interface weatherInfo {
-  coord: { lon: number; lat: number; };
-  weather: weather[];
-  base: string;
-  main: {
-    temp: number; feels_like: number; temp_min: number;
-    temp_max: number; pressure: number; humidity: number;
-    sea_level: number; grnd_level: number;
-  };
-  visibility: number;
-  wind: { speed: number; deg: number; gust: number; };
-  clouds: { all: number; };
-  dt: number;
-  sys: { type: number; id: number; country: string; sunrise: number; sunset: number; };
-  timezone: number;
-  id: number;
-  name: string;
-  cod: number;
-}
-interface weather {
-  id: number;
-  main: string;
-  description: string;
-  icon: string;
 }
 
 let initWather: weatherInfo;

@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 
+// services
 import { CityService } from '../service/city.service';
 import { WeatherService } from '../service/weather.service';
 
-// 独自構造体
+// Interfaces
+import { weatherInfo } from 'src/app/interfaces/weatherInfo.interface';
+
 interface cityRes {
   city: string;
   city_kana: number;
@@ -19,31 +22,6 @@ interface townInfo {
   postal: number;
 }
 
-interface weatherInfo {
-  coord: { lon: number; lat: number; };
-  weather: weather[];
-  base: string;
-  main: {
-    temp: number; feels_like: number; temp_min: number;
-    temp_max: number; pressure: number; humidity: number;
-    sea_level: number; grnd_level: number;
-  };
-  visibility: number;
-  wind: { speed: number; deg: number; gust: number; };
-  clouds: { all: number; };
-  dt: number;
-  sys: { type: number; id: number; country: string; sunrise: number; sunset: number; };
-  timezone: number;
-  id: number;
-  name: string;
-  cod: number;
-}
-interface weather {
-  id: number;
-  main: string;
-  description: string;
-  icon: string;
-}
 // グローバル変数的なヤツのお試し
 let CityApiData: cityRes[];
 let TownApiData: townInfo[];
