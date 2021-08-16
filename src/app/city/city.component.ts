@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 
+// services
 import { CityService } from '../service/city.service';
 import { WeatherService } from '../service/weather.service';
 
-// 独自構造体
+// Interfaces
+import { weatherInfo } from 'src/app/interfaces/weatherInfo.interface';
+
 interface cityRes {
   city: string;
   city_kana: number;
@@ -19,31 +22,6 @@ interface townInfo {
   postal: number;
 }
 
-interface weatherInfo {
-  coord: { lon: number; lat: number; };
-  weather: weather[];
-  base: string;
-  main: {
-    temp: number; feels_like: number; temp_min: number;
-    temp_max: number; pressure: number; humidity: number;
-    sea_level: number; grnd_level: number;
-  };
-  visibility: number;
-  wind: { speed: number; deg: number; gust: number; };
-  clouds: { all: number; };
-  dt: number;
-  sys: { type: number; id: number; country: string; sunrise: number; sunset: number; };
-  timezone: number;
-  id: number;
-  name: string;
-  cod: number;
-}
-interface weather {
-  id: number;
-  main: string;
-  description: string;
-  icon: string;
-}
 // グローバル変数的なヤツのお試し
 let CityApiData: cityRes[];
 let TownApiData: townInfo[];
@@ -116,27 +94,6 @@ export class CityComponent implements OnInit {
    */
   changeSelectedTown(town: townInfo): void {
     this.selectedTown = town;
-  }
-
-  /**
-   * フォームの値をもとに町情報を取得
-   * ※この関数の代わりに天気検索する
-   */
-  searchTowns(): void {
-    if (this.city_name) {
-      this.cityService.getTowns(this.city_name).subscribe(res => {
-        let tmp = res['response']
-        this.dataSourceTown = tmp['location'];
-        this.sortTowns4name();
-        this.town_list = [];
-        for (let i = 0; i < this.dataSourceTown.length; ++i) {
-          // (そのた)は除外する。
-          if (this.dataSourceTown[i].town_kana != '(そのた)') {
-            this.town_list.push(this.dataSourceTown[i]);
-          }
-        }
-      });
-    }
   }
 
   /**

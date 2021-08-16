@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ChartsModule } from 'ng2-charts';
 import { NgxChartsModule } from '@swimlane/ngx-charts'
 
@@ -30,6 +30,11 @@ import { WeatherComponent } from './weather/weather.component';
 import { HourlyTempChartComponent } from './weather/hourly-temp-chart/hourly-temp-chart.component';
 import { DailyTempChartComponent } from './weather/daily-temp-chart/daily-temp-chart.component';
 
+// デバッグ用コンポーネント
+import { DebugComponent } from './debug/debug.component';
+import { DebugListTableComponent } from './debug/debug-list-table/debug-list-table.component';
+import { DynamicFormComponent } from './debug/dynamic-form/dynamic-form.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -37,6 +42,9 @@ import { DailyTempChartComponent } from './weather/daily-temp-chart/daily-temp-c
     WeatherComponent,
     HourlyTempChartComponent,
     DailyTempChartComponent,
+    DebugComponent,
+    DebugListTableComponent,
+    DynamicFormComponent,
   ],
   imports: [
     BrowserModule,
@@ -48,6 +56,7 @@ import { DailyTempChartComponent } from './weather/daily-temp-chart/daily-temp-c
     // HTTPサービスインポート
     HttpClientModule,
     FormsModule,
+    ReactiveFormsModule,
     // Angular Material モジュールインポート
     MatButtonModule,
     MatCheckboxModule,
