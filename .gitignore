@@ -45,4 +45,3 @@ testem.log
 Thumbs.db
 
 /src/environments/apikey.ts
-/src/app/debug
