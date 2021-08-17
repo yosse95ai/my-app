@@ -5,21 +5,12 @@ import { CityService } from '../service/city.service';
 import { WeatherService } from '../service/weather.service';
 
 // Interfaces
-import { weatherInfo } from 'src/app/interfaces/weatherInfo.interface';
+import { weatherInfo, townInfo } from 'src/app/interfaces/weatherInfo.interface';
+
 
 interface cityRes {
   city: string;
   city_kana: number;
-}
-interface townInfo {
-  city: string;
-  city_kana: string;
-  town: string;
-  town_kana: string;
-  x: number;
-  y: number;
-  prefecture: string;
-  postal: number;
 }
 
 // グローバル変数的なヤツのお試し
@@ -47,6 +38,8 @@ export class CityComponent implements OnInit {
   town_list: townInfo[] = [];
   selectedTownWeather: weatherInfo = initWather;
 
+  pos: { lat?: number; lon?: number; } = {};
+
   constructor(
     private cityService: CityService,
     private weatherService: WeatherService
@@ -62,6 +55,9 @@ export class CityComponent implements OnInit {
         this.pref_list.push(pref[i]);
       }
     });
+    this.cityService.getCurrentPosition().subscribe(
+      value => { this.pos = { lat: value.latitude, lon: value.longitude }; }
+    );
   }
 
   /******************************************************/
@@ -87,7 +83,7 @@ export class CityComponent implements OnInit {
   }
 
   /**
-   * - changイベント
+   * - changeイベント
    * - 地区名フォームの値が切り替えられたときに発火
    * - 選択されている地区を更新
    * @param town 地区の情報
@@ -134,7 +130,7 @@ export class CityComponent implements OnInit {
   /**
    * フォームに基づいて天気を検索
    */
-  updateWeather(): void{
+  updateWeather(): void {
     this.weatherService.getWeather(this.selectedTown.y, this.selectedTown.x).subscribe(res => {
       this.selectedTownWeather = res;
     });

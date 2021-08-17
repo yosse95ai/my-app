@@ -27,7 +27,6 @@
   <mat-form-field appearance="fill">
     <mat-label>地区名</mat-label>
     <mat-select name="town" (selectionChange)="changeSelectedTown($event.value)">
-      <!-- <mat-option>-指定なし-</mat-option> -->
       <mat-option *ngFor="let tn of town_list" [value]=tn>
         {{tn.town}}
       </mat-option>
@@ -35,6 +34,7 @@
   </mat-form-field>
   <button mat-raised-button (click)="updateWeather()" color="primary">検索</button>
 </div>
+<div *ngIf="!!pos">{{pos.lat}}
 
+</div>
 <app-weather [townWeather]="selectedTownWeather"></app-weather>
-

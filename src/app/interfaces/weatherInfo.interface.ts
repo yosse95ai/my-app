@@ -24,3 +24,14 @@ export interface weatherInfo {
     name: string;
     cod: number;
 }
+
+export interface townInfo {
+    city: string;
+    city_kana: string;
+    town: string;
+    town_kana: string;
+    x: number;
+    y: number;
+    prefecture: string;
+    postal: number;
+}
