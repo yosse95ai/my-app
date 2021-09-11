@@ -2,6 +2,11 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 12.1.0.
 
+Development branch is [dev](https://github.com/yosse95ai/my-app/tree/dev).
+
+The project is managed by issue and developed by creating a branch for each issue.
+
+
 ## Demo Movie
 
 This is Angular application demo movie.
