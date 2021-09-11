@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { ConfigService } from '../service/config.service';
-import { CityService } from '../service/city.service';
-import { Observable } from 'rxjs';
 
-// 独自構造体
+// services
+import { CityService } from '../service/city.service';
+import { WeatherService } from '../service/weather.service';
+
+// Interfaces
+import { weatherInfo } from 'src/app/interfaces/weatherInfo.interface';
+
 interface cityRes {
   city: string;
   city_kana: number;
@@ -18,10 +21,13 @@ interface townInfo {
   prefecture: string;
   postal: number;
 }
+
 // グローバル変数的なヤツのお試し
 let CityApiData: cityRes[];
 let TownApiData: townInfo[];
 let TownInfoInit: townInfo;
+let initWather: weatherInfo;
+
 
 @Component({
   selector: 'app-city',
@@ -30,7 +36,7 @@ let TownInfoInit: townInfo;
 })
 export class CityComponent implements OnInit {
 
-  title = '市町村区検索API';
+  title = 'Weather Report';
   displayedColumns: string[] = ['town', 'town-kana', 'town-latitude', 'town-longitude', 'postal']; // 町名表示用
   dataSource = CityApiData;       // Apiで取得した情報
   dataSourceTown = TownApiData;   // Apiで取得した町の情報
@@ -39,10 +45,11 @@ export class CityComponent implements OnInit {
   pref_list: string[] = [];
   city_list: string[] = [];
   town_list: townInfo[] = [];
+  selectedTownWeather: weatherInfo = initWather;
 
   constructor(
-    private config: ConfigService,
-    private cityService: CityService
+    private cityService: CityService,
+    private weatherService: WeatherService
   ) { }
 
   // コンポーネント読み込み時処理
@@ -90,27 +97,6 @@ export class CityComponent implements OnInit {
   }
 
   /**
-   * フォームの値をもとに町情報を取得
-   * ※この関数の代わりに天気検索する
-   */
-  searchTowns(): void {
-    if (this.city_name) {
-      this.cityService.getTowns(this.city_name).subscribe(res => {
-        let tmp = res['response']
-        this.dataSourceTown = tmp['location'];
-        this.sortTowns4name();
-        this.town_list = [];
-        for (let i = 0; i < this.dataSourceTown.length; ++i) {
-          // (そのた)は除外する。
-          if (this.dataSourceTown[i].town_kana != '(そのた)') {
-            this.town_list.push(this.dataSourceTown[i]);
-          }
-        }
-      });
-    }
-  }
-
-  /**
    * - フォームの値をもとに町情報を取得
    * - 地区名フォームの値が切り替えられたときに発火
    * @param city_name 市町村区の名前
@@ -122,14 +108,36 @@ export class CityComponent implements OnInit {
         this.dataSourceTown = tmp['location'];
         this.sortTowns4name();
         this.town_list = [];
+        let latitude: number = 0;
+        let longitude: number = 0;
         for (let i = 0; i < this.dataSourceTown.length; ++i) {
           // (そのた)は除外する。
           if (this.dataSourceTown[i].town_kana != '(そのた)') {
             this.town_list.push(this.dataSourceTown[i]);
           }
+          latitude += +this.dataSourceTown[i].y;
+          longitude += +this.dataSourceTown[i].x;
         }
+        // 指定なし用の緯度経度(全体平均)
+        latitude /= this.dataSourceTown.length;
+        longitude /= this.dataSourceTown.length;
+        let otherTown: townInfo = {
+          city: city_name, city_kana: this.dataSourceTown[0].town_kana,
+          town: '-指定なし-', town_kana: '()', x: longitude, y: latitude,
+          postal: 0, prefecture: this.dataSourceTown[0].prefecture
+        };
+        this.town_list.unshift(otherTown);
       });
     }
+  }
+
+  /**
+   * フォームに基づいて天気を検索
+   */
+  updateWeather(): void{
+    this.weatherService.getWeather(this.selectedTown.y, this.selectedTown.x).subscribe(res => {
+      this.selectedTownWeather = res;
+    });
   }
 
   /**

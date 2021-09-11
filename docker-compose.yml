@@ -1,0 +1,23 @@
+version: '3'
+
+services: 
+    fe-app:
+        image: fe-app
+        build:
+            context: $PWD/
+        ports:
+            - '4201:4200'
+        volumes:
+            - $PWD/:/usr/local/app          # live reloading
+            - /usr/local/app/node_modules   # node_modulesは除外
+        command: npx ng serve --host=0.0.0.0
+
+#  Nginx version compose
+# services:
+#     fe_app:
+#         build: .
+#         ports:
+#             - '80:9000'
+#         volumes: 
+#             - '.:/usr/local/app'
+#         tty: true

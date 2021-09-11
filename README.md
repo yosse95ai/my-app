@@ -8,12 +8,12 @@ The project is managed by issue and developed by creating a branch for each issu
 
 
 ## Demo Movie
+
 This is Angular application demo movie.
 
 Simple responsive support.
 
 https://user-images.githubusercontent.com/51770462/129039640-6755b3de-bf82-49f2-9aa8-ee3b49ac2448.mp4
-
 
 ## Development server
 

@@ -1,0 +1,29 @@
+table {
+  width: 100%;
+  background-color: whitesmoke;
+}
+
+#mn {
+  margin-left: 100px;
+  margin-right: 100px;
+}
+
+#dailyChart {
+  background-color: white;
+}
+
+#HourlyChart {
+  background-color: #ffffff;
+}
+
+.flexLayoutContainer {
+  height: 100%;
+  margin-top: 24px;
+}
+
+
+mat-card{
+    margin-left:auto;
+    margin-right:auto;
+    vertical-align:middle;
+}
