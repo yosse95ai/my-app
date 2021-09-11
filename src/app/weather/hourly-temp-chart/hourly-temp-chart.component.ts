@@ -18,25 +18,26 @@ export class HourlyTempChartComponent {
   private minMax: number[] = [];
   private minimam = 0;
   private maximam = 50;
-  private w = 1600;
-  private h = 900;
-  private HEIGHT = 350;
-  private WIDTH = 480
+  // private w = 1368;     // Surface Pro 4 に合わせた
+  // private h = 872;      // Surface Pro 4 に合わせた
+  // private HEIGHT = 350; // w に合わせたレスポンシブ
+  // private WIDTH = 480;  // h に合わせたレスポンシブ
 
   constructor() {
-    this.w = screen.availWidth;
-    this.h = screen.availHeight;
-    if (window.innerWidth > 720) {
-      this.view = [
-        this.WIDTH * window.innerWidth / this.w,
-        this.HEIGHT * window.innerHeight / this.h
-      ];
-    } else {
-      this.view = [
-        2 * this.WIDTH * window.innerWidth / this.w - 100,
-        this.HEIGHT * window.innerHeight / this.h
-      ];
-    }
+    // this.w = screen.availWidth;
+    // this.h = screen.availHeight;
+    // if (window.innerWidth > 720) {
+    //   this.view = [
+    //     this.WIDTH * window.innerWidth / this.w,
+    //     this.HEIGHT * window.innerHeight / this.h
+    //   ];
+    // } else {
+    //   this.view = [
+    //     2 * this.WIDTH * window.innerWidth / this.w - 100,
+    //     this.HEIGHT * window.innerHeight / this.h
+    //   ];
+    // }
+
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -77,7 +78,7 @@ export class HourlyTempChartComponent {
   }
 
   // View Size
-  public view: any = [this.WIDTH, this.HEIGHT];
+  // public view: any = [this.WIDTH, this.HEIGHT];
 
   // Data
   public lineChartData = [
@@ -110,17 +111,17 @@ export class HourlyTempChartComponent {
   };
 
 
-  onResize(event: any) {
-    if (window.innerWidth > 720) {
-      this.view = [
-        this.WIDTH * event.target.innerWidth / this.w,
-        this.HEIGHT * event.target.innerHeight / this.h
-      ];
-    } else {
-      this.view = [
-        2 * this.WIDTH * event.target.innerWidth / this.w - 100,
-        this.HEIGHT * event.target.innerHeight / this.h
-      ];
-    }
-  }
+  // onResize(event: any) {
+  //   if (window.innerWidth > 720) {
+  //     this.view = [
+  //       this.WIDTH * event.target.innerWidth / this.w,
+  //       this.HEIGHT * event.target.innerHeight / this.h
+  //     ];
+  //   } else {
+  //     this.view = [
+  //       2 * this.WIDTH * event.target.innerWidth / this.w - 100,
+  //       this.HEIGHT * event.target.innerHeight / this.h
+  //     ];
+  //   }
+  // }
 }

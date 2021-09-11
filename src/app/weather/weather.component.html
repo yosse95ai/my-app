@@ -35,19 +35,24 @@
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
 </div>
-<div *ngIf="townWeather" (window:resize)=displaySizeChange($event)>
+<div *ngIf="townWeather">
+  <!--  (window:resize)=displaySizeChange($event) -->
   <!-- Chart Section -->
   <div class="flexLayoutContainer">
     <div fxLayout="column">
-      <div fxLayout={{layout}} fxFlex={{flex}} [fxLayoutGap]="layoutGap">
+      <div fxLayout="row wrap">
         <mat-card id='HourlyChart' style="position:relative">
           <mat-card-content style="justify-content: center">
-            <app-hourly-temp-chart [dataSet]='hourlySet'></app-hourly-temp-chart>
+            <div class="temp-chart">
+              <app-hourly-temp-chart [dataSet]='hourlySet'></app-hourly-temp-chart>
+            </div>
           </mat-card-content>
         </mat-card>
         <mat-card id='dailyChart' style="position:relative">
           <mat-card-content style="justify-content: center">
-            <app-daily-temp-chart [dataSet]='dailySet'></app-daily-temp-chart>
+            <div class="temp-chart">
+              <app-daily-temp-chart [dataSet]='dailySet'></app-daily-temp-chart>
+            </div>
           </mat-card-content>
         </mat-card>
       </div>
@@ -55,4 +60,4 @@
   </div>
   <!-- End Chart Section -->
 </div>
-<a href="/debug">>>debug-component</a>
+<a href="/debug">></a>

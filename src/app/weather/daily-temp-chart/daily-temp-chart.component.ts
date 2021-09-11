@@ -20,10 +20,10 @@ export class DailyTempChartComponent {
   private minMax: number[] = [];
   private minimam = 0;
   private maximam = 50;
-  private w = 1600;
-  private h = 900;
-  private HEIGHT = 350;
-  private WIDTH = 480
+  private w = 1368;     // Surface Pro 4 に合わせた
+  private h = 872;      // Surface Pro 4 に合わせた
+  private HEIGHT = 350; // w に合わせたレスポンシブ
+  private WIDTH = 480;  // h に合わせたレスポンシブ
 
 
   constructor() {
