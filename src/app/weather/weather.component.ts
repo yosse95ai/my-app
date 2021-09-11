@@ -26,16 +26,7 @@ let nonNestData: weatherInfoNonNest[];
 })
 export class WeatherComponent implements OnInit {
 
-  constructor(private weatherService: WeatherService) {
-    if (window.innerWidth <= 720) {
-      this.layout = "column";
-      this.flex = "100";
-    }
-    else {
-      this.layout = "row";
-      this.flex = "1 1 50%";
-    }
-  }
+  constructor(private weatherService: WeatherService) { }
 
   ngOnInit(): void {
   }
@@ -50,20 +41,6 @@ export class WeatherComponent implements OnInit {
   hourlySet: any;
   dailySet: any;
 
-  public layoutGap: string = '24px';
-  public layout: string = "row";
-  public flex: string = "1 1 50%";
-
-  displaySizeChange(event: any): void {
-    if (event.target.innerWidth <= 720) {
-      this.layout = "column";
-      this.flex = "100";
-    }
-    else {
-      this.layout = "row";
-      this.flex = "1 1 50%";
-    }
-  }
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['townWeather'].currentValue) {
       //Called before any other lifecycle hook. Use it to inject dependencies, but avoid any serious work here.
@@ -73,41 +50,38 @@ export class WeatherComponent implements OnInit {
         let ret: weatherInfoNonNest[] = [];
         let weather = info.weather;
         let r: weatherInfoNonNest = {};
-        for (let i = 0; i < weather.length; ++i) {
-          r.lon = info.coord.lon;
-          r.lat = info.coord.lat;
-          r.base = info.base;
-          r.temp = info.main.temp;
-          r.humidity = info.main.humidity;
-          r.pressure = info.main.pressure;
-          r.sea_level = info.main.sea_level;
-          r.grnd_level = info.main.grnd_level;
-          r.feels_like = info.main.feels_like;
-          r.temp_max = info.main.temp_max;
-          r.temp_min = info.main.temp_min;
-          r.temp = info.main.temp;
-          r.wind_speed = info.wind.speed;
-          r.wind_deg = info.wind.deg;
-          r.gust = info.wind.gust;
-          r.visibility = info.visibility;
-          r.clouds_all = info.clouds.all;
-          r.dt = info.dt;
-          r.sys_id = info.sys.id;
-          r.sys_type = info.sys.type;
-          r.country = info.sys.country;
-          r.sunrise = info.sys.sunrise;
-          r.sunset = info.sys.sunset;
-          r.timezone = info.timezone;
-          r.id = info.id;
-          r.name = info.name;
-          r.cod = info.cod;
-          r.weather_description = info.weather[i].description;
-          r.weather_icon = info.weather[i].icon;
-          r.weather_id = info.weather[i].id;
-          r.weather_main = info.weather[i].main;
-          ret.push(r);
-          break;
-        }
+        r.lon = info.coord.lon;
+        r.lat = info.coord.lat;
+        r.base = info.base;
+        r.temp = info.main.temp;
+        r.humidity = info.main.humidity;
+        r.pressure = info.main.pressure;
+        r.sea_level = info.main.sea_level;
+        r.grnd_level = info.main.grnd_level;
+        r.feels_like = info.main.feels_like;
+        r.temp_max = info.main.temp_max;
+        r.temp_min = info.main.temp_min;
+        r.temp = info.main.temp;
+        r.wind_speed = info.wind.speed;
+        r.wind_deg = info.wind.deg;
+        r.gust = info.wind.gust;
+        r.visibility = info.visibility;
+        r.clouds_all = info.clouds.all;
+        r.dt = info.dt;
+        r.sys_id = info.sys.id;
+        r.sys_type = info.sys.type;
+        r.country = info.sys.country;
+        r.sunrise = info.sys.sunrise;
+        r.sunset = info.sys.sunset;
+        r.timezone = info.timezone;
+        r.id = info.id;
+        r.name = info.name;
+        r.cod = info.cod;
+        r.weather_description = info.weather[0].description;
+        r.weather_icon = info.weather[0].icon;
+        r.weather_id = info.weather[0].id;
+        r.weather_main = info.weather[0].main;
+        ret.push(r);
         this.dataSource = ret;
       });
       this.weatherService.getHourlyWeather(val.coord.lat, val.coord.lon).subscribe(info => {
